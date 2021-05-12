@@ -1,10 +1,11 @@
 const moment = require('moment')
-const { restart } = require('nodemon')
 // biblioteca para lidar com datas
+const { restart } = require('nodemon')
+// Nodemon
 const conexao = require('../infraestrutura/conexao')
 
 class Atendimento {
-    // Creating the Atendimento object and its add function
+    // Creating the Atendimento object and its functions
     adiciona(atendimento, res) {
         const dataCriacao = moment().format('YYYY-MM-DD HH:MM:SS')
         // moment() gets the time and format() sets it to Year-Month-Day
@@ -41,6 +42,7 @@ class Atendimento {
         } else {
             const atendimentoDatado = {...atendimento, dataCriacao, data}
             // DUVIDAAAA Aqui criamos um array contendo as novas informações, pq os 3 pontos antes???
+            // destructure pega o objeto original e adiciona os 2 campos novos 
 
             const sql = 'INSERT INTO Atendimentos SET ?'
 

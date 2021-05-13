@@ -46,7 +46,7 @@ class Atendimento {
 
             const sql = 'INSERT INTO Atendimentos SET ?'
 
-            conexao.query(sql, atendimentoDatado, (erro, resultados) => {
+            conexao.query(sql, atendimentoDatado, erro => {
                 if(erro) {
                     res.status(400).json(erro)
                     // error 400 stands for client side error, meaning the user did something wrong

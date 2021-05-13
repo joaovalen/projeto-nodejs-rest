@@ -1,5 +1,4 @@
 const { restart } = require('nodemon')
-const atendimentos = require('../models/atendimentos')
 const Atendimento = require('../models/atendimentos')
 // Getting the Atendimento object from the models
 

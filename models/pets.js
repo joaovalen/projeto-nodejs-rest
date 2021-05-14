@@ -17,20 +17,23 @@ class Pet {
     }
 
     adiciona(pet, res) {
-        uploadDeArquivo(pet.imagem, pet.nome, (finalPath) => {
-            // receives the final Path for the image 
-            const novoPet = {nome: pet.nome, imagem: finalPath}
-
-            const sql = 'INSERT INTO Pets SET ?'
-            conexao.query(sql, novoPet, erro => {
-                if(erro) {
-                    res.status(400).json(erro)
-                    // error 400 stands for client side error, meaning the user did something wrong
-                } else {
-                    res.status(201).json(novoPet)
-                    // using httpstatuses.com we can inform better the error or success
-                }
-            })
+        uploadDeArquivo(pet.imagem, pet.nome, (erro, finalPath) => {
+            if(erro){
+                res.status(400).json(erro)
+            } else {
+                const novoPet = {nome: pet.nome, imagem: finalPath}
+                 // receives the final Path for the image 
+                const sql = 'INSERT INTO Pets SET ?'
+                conexao.query(sql, novoPet, erro => {
+                    if(erro) {
+                        res.status(400).json(erro)
+                        // error 400 stands for client side error, meaning the user did something wrong
+                    } else {
+                        res.status(201).json(novoPet)
+                        // using httpstatuses.com we can inform better the error or success
+                    }
+                })
+            } 
         })
     }
 

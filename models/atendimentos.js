@@ -1,3 +1,4 @@
+const axios = require('axios')
 const moment = require('moment')
 // biblioteca para lidar com datas
 const { restart } = require('nodemon')
@@ -75,11 +76,16 @@ class Atendimento {
         const sql = 'SELECT * FROM Atendimentos WHERE id = ?'
 
         conexao.query(sql, id, (erro, resultados) => {
-            const atendimento = resultados[0]
+            const atendimento = resultados
+            //const cpf = atendimento.cliente
             // Returning the object itself and not an array with only one object as resultado would return
             if(erro) {
                 res.status(400).json(erro)
             } else {
+                //const {data} = await axios.get(`https://localhost:8082/${cpf}`)
+                // Using an simulated external API to get data based on the cpf
+                //atendimento.cliente = data
+                // Adicionamos o nome do cliente e data de nascimento baseado no cpf
                 res.status(200).json(atendimento)
             }
         })

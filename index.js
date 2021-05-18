@@ -1,10 +1,10 @@
 const customExpress = require('./config/customExpress')
 // imports express
 
-const conexao = require('./infraestrutura/conexao')
+const conexao = require('./infraestrutura/database/conexao')
 // imports the db conection file
 
-const Tabelas = require('./infraestrutura/tabelas')
+const Tabelas = require('./infraestrutura/database/tabelas')
 
 // tries connecting to the db using conect() trought our conexao file data
 conexao.connect((erro) => {

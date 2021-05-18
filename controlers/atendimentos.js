@@ -1,48 +1,50 @@
 // Controlers são responsáveis por falar para onde vamos enviar o usuário dependendo da rota que ele chega
 // Além disso o controler responde o cliente, é o nosso intermediário entre as duas partes
 // Validações de segurança são feitas aqui pois não afetam nossas regras de negócio
-const { restart } = require('nodemon')
 const Atendimento = require('../models/atendimentos')
-// Getting the Atendimento object from the models
 
 module.exports = app => {
-    app.get('/atendimentos', (req, res) => {
-        Atendimento.lista(res)
-    })
-    // Listening for GET
 
+    // GET 
+    app.get('/atendimentos', (req,res) => {
+        Atendimento.lista()
+            .then(resultados => res.json(resultados))
+            // res.json sends http status 200 by default
+            .catch(erros => res.status(400).json(erros))
+    })
+
+    // GET/:id
     app.get('/atendimentos/:id', (req, res) => {
         const id = parseInt(req.params.id)
-        // Turns user data into number
-
+        // Turns URL data into an Integer
         Atendimento.buscaPorId(id,res)
+            .then(resultados => res.json(resultados))
+            .catch(erros => res.status(400).json(erros))
     })
-    // Search using ID
 
+    // POST
     app.post('/atendimentos', (req, res) => {
         const atendimento = req.body
-        // takes the data from the body
-
         Atendimento.adiciona(atendimento)
-            .then(atendimentoCadastrado => 
-                res.status(201).json(atendimentoCadastrado)
-            )
-            .catch(erro => 
-                res.status(400).json(erros))
-        // Uses the data to add a new atendimento  
+            .then(atendimentoCadastrado => res.status(201).json(atendimentoCadastrado))
+            .catch(erros => res.status(400).json(erros))  
     })
-    // Listening for POST
 
+    // PATCH
     app.patch('/atendimentos/:id', (req, res) => {
         const id = parseInt(req.params.id)
         const valores = req.body
-
-        Atendimento.altera(id,valores,res)
+        Atendimento.altera(id,valores)
+            .then(resultados => res.status(200).json(resultados))
+            .catch(erros => res.status(400).json(erros))
     })
 
+    // DELETE
     app.delete('/atendimentos/:id', (req,res) => {
         const id = parseInt(req.params.id)
         
         Atendimento.deleta(id,res)
+            .then(resultados => res.status(202).json(resultados))
+            .catch(erros => res.status(400).json(erros))
     })
 } 
